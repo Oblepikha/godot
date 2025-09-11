@@ -1116,6 +1116,12 @@
 		<member name="interface/theme/preset" type="String" setter="" getter="">
 			The editor theme preset to use.
 		</member>
+		<member name="interface/theme/preset_dark" type="String" setter="" getter="">
+			The editor dark theme preset to follow system theme.
+		</member>
+		<member name="interface/theme/preset_light" type="String" setter="" getter="">
+			The editor light theme preset to follow system theme.
+		</member>
 		<member name="interface/theme/relationship_line_opacity" type="float" setter="" getter="">
 			The opacity to use when drawing relationship lines in the editor's [Tree]-based GUIs (such as the Scene tree dock).
 		</member>
@@ -1124,6 +1130,10 @@
 		</member>
 		<member name="interface/theme/use_system_accent_color" type="bool" setter="" getter="">
 			If [code]true[/code], set accent color based on system settings.
+			[b]Note:[/b] This setting is only effective on Windows, MacOS, and Android.
+		</member>
+		<member name="interface/theme/use_system_base_color" type="bool" setter="" getter="">
+			If [code]true[/code], set base color based on system settings.
 			[b]Note:[/b] This setting is only effective on Windows, MacOS, and Android.
 		</member>
 		<member name="interface/touchscreen/enable_long_press_as_right_click" type="bool" setter="" getter="">

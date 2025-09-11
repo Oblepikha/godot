@@ -228,6 +228,8 @@ EditorThemeManager::ThemeConfiguration EditorThemeManager::_create_theme_config(
 	// Basic properties.
 
 	config.preset = EDITOR_GET("interface/theme/preset");
+	config.preset_dark = EDITOR_GET("interface/theme/preset_dark");
+	config.preset_light = EDITOR_GET("interface/theme/preset_light");
 	config.spacing_preset = EDITOR_GET("interface/theme/spacing_preset");
 
 	config.base_color = EDITOR_GET("interface/theme/base_color");
@@ -257,24 +259,22 @@ EditorThemeManager::ThemeConfiguration EditorThemeManager::_create_theme_config(
 	// Handle main theme preset.
 	{
 		const bool follow_system_theme = EDITOR_GET("interface/theme/follow_system_theme");
+		const bool use_system_base_color = EDITOR_GET("interface/theme/use_system_base_color");
 		const bool use_system_accent_color = EDITOR_GET("interface/theme/use_system_accent_color");
 		DisplayServer *display_server = DisplayServer::get_singleton();
 		Color system_base_color = display_server->get_base_color();
 		Color system_accent_color = display_server->get_accent_color();
 
 		if (follow_system_theme) {
-			String dark_theme = "Default";
-			String light_theme = "Light";
-
-			config.preset = light_theme; // Assume light theme if we can't detect system theme attributes.
+			config.preset = config.preset_light; // Assume light theme if we can't detect system theme attributes.
 
 			if (system_base_color == Color(0, 0, 0, 0)) {
 				if (display_server->is_dark_mode_supported() && display_server->is_dark_mode()) {
-					config.preset = dark_theme;
+					config.preset = config.preset_dark;
 				}
 			} else {
 				if (system_base_color.get_luminance() < 0.5) {
-					config.preset = dark_theme;
+					config.preset = config.preset_dark;
 				}
 			}
 		}
@@ -335,7 +335,7 @@ EditorThemeManager::ThemeConfiguration EditorThemeManager::_create_theme_config(
 			EditorSettings::get_singleton()->set_initial_value("interface/theme/draw_extra_borders", config.draw_extra_borders);
 		}
 
-		if (follow_system_theme && system_base_color != Color(0, 0, 0, 0)) {
+		if (use_system_base_color && system_base_color != Color(0, 0, 0, 0)) {
 			config.base_color = system_base_color;
 			config.preset = "Custom";
 		}

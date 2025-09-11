@@ -50,6 +50,8 @@ class EditorThemeManager {
 		// Basic properties.
 
 		String preset;
+		String preset_dark;
+		String preset_light;
 		String spacing_preset;
 
 		Color base_color;
