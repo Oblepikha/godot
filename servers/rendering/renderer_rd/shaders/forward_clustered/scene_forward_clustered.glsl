@@ -2091,11 +2091,9 @@ void fragment_shader(in SceneData scene_data) {
 			indirect_specular_light = reflection_accum.rgb;
 		}
 
-#if !defined(USE_LIGHTMAP)
 		if (ambient_accum.a > 0.0) {
 			ambient_light = ambient_accum.rgb;
 		}
-#endif
 	}
 
 	//finalize ambient light here

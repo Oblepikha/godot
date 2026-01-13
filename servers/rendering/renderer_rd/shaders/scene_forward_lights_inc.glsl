@@ -979,6 +979,7 @@ void reflection_process(uint ref_index, vec3 vertex, hvec3 ref_vec, hvec3 normal
 			//do nothing
 		} break;
 		case REFLECTION_AMBIENT_ENVIRONMENT: {
+#if !defined(USE_LIGHTMAP)
 			vec3 local_amb_vec = (reflections.data[ref_index].local_matrix * vec4(normal, 0.0)).xyz;
 			hvec4 ambient_out;
 			half ambient_blend = max(half(0.0), blend - ambient_accum.a);
@@ -990,12 +991,18 @@ void reflection_process(uint ref_index, vec3 vertex, hvec3 ref_vec, hvec3 normal
 			ambient_out.a = ambient_blend;
 			ambient_out.rgb *= ambient_out.a;
 			ambient_accum += ambient_out;
+#endif
 		} break;
 		case REFLECTION_AMBIENT_COLOR: {
-			hvec4 ambient_out;
-			half ambient_blend = max(half(0.0), blend - ambient_accum.a);
+			float ambient_energy = reflections.data[ref_index].ambient.a;
+			half contribution = min(half(1.0), ambient_energy); // 0-1
+			half multiplier = max(half(1.0), ambient_energy); // 1-INF
 
-			ambient_out.rgb = hvec3(reflections.data[ref_index].ambient);
+			hvec4 ambient_out;
+			half ambient_blend = max(half(0.0), blend * contribution - ambient_accum.a);
+
+			ambient_out.rgb = hvec3(reflections.data[ref_index].ambient.rgb);
+			ambient_out.rgb *= multiplier;
 			ambient_out.a = ambient_blend;
 			ambient_out.rgb *= ambient_out.a;
 			ambient_accum += ambient_out;

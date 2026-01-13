@@ -1815,10 +1815,10 @@ void LightStorage::update_reflection_probe_buffer(RenderDataRD *p_render_data, c
 		}
 
 		Color ambient_linear = probe->ambient_color.srgb_to_linear();
-		float interior_ambient_energy = probe->ambient_color_energy;
-		reflection_ubo.ambient[0] = ambient_linear.r * interior_ambient_energy;
-		reflection_ubo.ambient[1] = ambient_linear.g * interior_ambient_energy;
-		reflection_ubo.ambient[2] = ambient_linear.b * interior_ambient_energy;
+		reflection_ubo.ambient[0] = ambient_linear.r;
+		reflection_ubo.ambient[1] = ambient_linear.g;
+		reflection_ubo.ambient[2] = ambient_linear.b;
+		reflection_ubo.ambient[3] = probe->ambient_color_energy;
 
 		Transform3D transform = rpi->transform;
 		Transform3D proj = (p_camera_inverse_transform * transform).inverse();

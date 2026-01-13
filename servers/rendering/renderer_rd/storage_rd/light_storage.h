@@ -306,7 +306,7 @@ private:
 		float index;
 		float box_offset[3];
 		uint32_t mask;
-		float ambient[3]; // ambient color,
+		float ambient[4]; // ambient color and energy,
 		float intensity;
 		float blend_distance;
 		uint32_t exterior;
@@ -315,7 +315,6 @@ private:
 		float exposure_normalization;
 		uint32_t pad0;
 		uint32_t pad1;
-		uint32_t pad2;
 		float local_matrix[16]; // up to here for spot and omni, rest is for directional
 	};
 
