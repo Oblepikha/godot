@@ -482,6 +482,15 @@ Voxelizer::BakeResult Voxelizer::plot_mesh(const Transform3D &p_xform, Ref<Mesh>
 				}
 				//plot
 				_plot_face(0, 0, 0, 0, 0, vtxs, normal, uvs, material, po2_bounds);
+				if (solidify > 0.0) {
+					Vector3 f_vtxs[3];
+					Vector3 f_normal[3];
+					for (int k = 0; k < 3; k++) {
+						f_normal[k] = -normal[k];
+						f_vtxs[k] = vtxs[k] + solidify * f_normal[k];
+					}
+					_plot_face(0, 0, 0, 0, 0, f_vtxs, f_normal, uvs, material, po2_bounds);
+				}
 			}
 
 		} else {
@@ -521,6 +530,15 @@ Voxelizer::BakeResult Voxelizer::plot_mesh(const Transform3D &p_xform, Ref<Mesh>
 				}
 				//plot face
 				_plot_face(0, 0, 0, 0, 0, vtxs, normal, uvs, material, po2_bounds);
+				if (solidify > 0.0) {
+					Vector3 f_vtxs[3];
+					Vector3 f_normal[3];
+					for (int k = 0; k < 3; k++) {
+						f_normal[k] = -normal[k];
+						f_vtxs[k] = vtxs[k] + solidify * f_normal[k];
+					}
+					_plot_face(0, 0, 0, 0, 0, f_vtxs, f_normal, uvs, material, po2_bounds);
+				}
 			}
 		}
 	}
@@ -660,11 +678,12 @@ void Voxelizer::_fixup_plot(int p_idx, int p_level) {
 	}
 }
 
-void Voxelizer::begin_bake(int p_subdiv, const AABB &p_bounds, float p_exposure_normalization) {
+void Voxelizer::begin_bake(int p_subdiv, const AABB &p_bounds, float p_exposure_normalization, float p_solidify) {
 	sorted = false;
 	original_bounds = p_bounds;
 	cell_subdiv = p_subdiv;
 	exposure_normalization = p_exposure_normalization;
+	solidify = p_solidify;
 	bake_cells.resize(1);
 	material_cache.clear();
 

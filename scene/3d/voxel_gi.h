@@ -119,6 +119,7 @@ private:
 	Subdiv subdiv = SUBDIV_128;
 	Vector3 size = Vector3(20, 20, 20);
 	Ref<CameraAttributes> camera_attributes;
+	float solidify = 0.0;
 
 	struct PlotMesh {
 		Ref<Material> override_material;
@@ -155,6 +156,9 @@ public:
 
 	void set_camera_attributes(const Ref<CameraAttributes> &p_camera_attributes);
 	Ref<CameraAttributes> get_camera_attributes() const;
+
+	void set_solidify(float p_solidify) { solidify = p_solidify; };
+	float get_solidify() const { return solidify; };
 
 	Vector3i get_estimated_cell_size() const;
 

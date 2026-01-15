@@ -437,7 +437,7 @@ void VoxelGI::bake(Node *p_from_node, bool p_create_visual_debug) {
 
 	Voxelizer baker;
 
-	baker.begin_bake(subdiv_value[subdiv], AABB(-size / 2, size), exposure_normalization);
+	baker.begin_bake(subdiv_value[subdiv], AABB(-size / 2, size), exposure_normalization, solidify);
 
 	List<PlotMesh> mesh_list;
 
@@ -563,6 +563,9 @@ void VoxelGI::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("set_camera_attributes", "camera_attributes"), &VoxelGI::set_camera_attributes);
 	ClassDB::bind_method(D_METHOD("get_camera_attributes"), &VoxelGI::get_camera_attributes);
 
+	ClassDB::bind_method(D_METHOD("set_solidify", "solidify"), &VoxelGI::set_solidify);
+	ClassDB::bind_method(D_METHOD("get_solidify"), &VoxelGI::get_solidify);
+
 	ClassDB::bind_method(D_METHOD("bake", "from_node", "create_visual_debug"), &VoxelGI::bake, DEFVAL(Variant()), DEFVAL(false));
 	ClassDB::bind_method(D_METHOD("debug_bake"), &VoxelGI::_debug_bake);
 	ClassDB::set_method_flags(get_class_static(), StringName("debug_bake"), METHOD_FLAGS_DEFAULT | METHOD_FLAG_EDITOR);
@@ -570,6 +573,7 @@ void VoxelGI::_bind_methods() {
 	ADD_PROPERTY(PropertyInfo(Variant::INT, "subdiv", PROPERTY_HINT_ENUM, "64,128,256,512"), "set_subdiv", "get_subdiv");
 	ADD_PROPERTY(PropertyInfo(Variant::VECTOR3, "size", PROPERTY_HINT_NONE, "suffix:m"), "set_size", "get_size");
 	ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "camera_attributes", PROPERTY_HINT_RESOURCE_TYPE, "CameraAttributesPractical,CameraAttributesPhysical"), "set_camera_attributes", "get_camera_attributes");
+	ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "solidify", PROPERTY_HINT_RANGE, "0.0,1.0,0.01,or_greater"), "set_solidify", "get_solidify");
 	ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "data", PROPERTY_HINT_RESOURCE_TYPE, "VoxelGIData", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_ALWAYS_DUPLICATE), "set_probe_data", "get_probe_data");
 
 	BIND_ENUM_CONSTANT(SUBDIV_64);

@@ -107,6 +107,8 @@ private:
 	int max_original_cells = 0;
 	int leaf_voxel_count = 0;
 
+	float solidify = 0.0;
+
 	Vector<Color> _get_bake_texture(Ref<Image> p_image, const Color &p_color_mul, const Color &p_color_add);
 	MaterialCache _get_material_cache(Ref<Material> p_material);
 
@@ -118,7 +120,7 @@ private:
 	void _sort();
 
 public:
-	void begin_bake(int p_subdiv, const AABB &p_bounds, float p_exposure_normalization);
+	void begin_bake(int p_subdiv, const AABB &p_bounds, float p_exposure_normalization, float p_solidify = 0.0);
 	int get_bake_steps(Ref<Mesh> &p_mesh) const;
 	BakeResult plot_mesh(const Transform3D &p_xform, Ref<Mesh> &p_mesh, const Vector<Ref<Material>> &p_materials, const Ref<Material> &p_override_material, BakeStepFunc p_bake_step_function);
 	void end_bake();
